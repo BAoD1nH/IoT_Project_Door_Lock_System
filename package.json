@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "mqtt": "^5.10.0",
     "ws": "^8.18.0"
   }

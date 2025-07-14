@@ -5,13 +5,15 @@ import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10
 // ------------------------------------------------ FIREBASE SECTION ------------------------------------------------ //
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAzcPmcrE906QGVPgzu_bqtg3kigtt-MoQ",
-    authDomain: "iotproject-ff799.firebaseapp.com",
-    projectId: "iotproject-ff799",
-    storageBucket: "iotproject-ff799.appspot.com",
-    messagingSenderId: "935747739462",
-    appId: "1:935747739462:web:b53e34088c27d8410f0f47"
+    apiKey: "AIzaSyBJL4_QZhwMQ9lvGmRClid44-zkxhBoTKw",
+    authDomain: "smart-door-lock-system-b9897.firebaseapp.com",
+    projectId: "smart-door-lock-system-b9897",
+    storageBucket: "smart-door-lock-system-b9897.firebasestorage.app",
+    messagingSenderId: "944814146140",
+    appId: "1:944814146140:web:8f01ba9d1a1281b1e6dc99",
+    measurementId: "G-C6BHJ1T7ZQ"
 };
+
 
 const app = initializeApp(firebaseConfig);
 
@@ -61,13 +63,23 @@ signUp.addEventListener('click', (event) => {
     })
     .catch((error) => {
         const errorCode = error.code;
+        const errorMessage = error.message;
 
-        if (errorCode == 'auth/email-already-in-use'){
-            showMessage('Email address already exists!!!', "signUpMessage");
+        console.error("🔥 Firebase Auth Error Code:", errorCode);
+        console.error("🔥 Firebase Auth Error Message:", errorMessage);
+
+        if (errorCode === 'auth/email-already-in-use') {
+            showMessage('Email đã được sử dụng!', 'signUpMessage');
+        } else if (errorCode === 'auth/invalid-email') {
+            showMessage('Email không hợp lệ.', 'signUpMessage');
+        } else if (errorCode === 'auth/weak-password') {
+            showMessage('Mật khẩu phải từ 6 ký tự trở lên.', 'signUpMessage');
+        } else if (errorCode === 'auth/operation-not-allowed') {
+            showMessage('Tính năng Email/Password chưa được bật trong Firebase.', 'signUpMessage');
         } else {
-            showMessage('Unable to create user', 'signUpMessage');
+            showMessage('Không thể tạo tài khoản: ' + errorMessage, 'signUpMessage');
         }
-    })
+    });
 })
 
 // Sign In Functionality - User need to provide {Email}, {Password}
